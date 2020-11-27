@@ -1,1 +1,113 @@
+###############################prueba.php##################################
+<!-- section 1 -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>ALMENDRA DE CACAO</title>
+</head>
+<body>
+<h1 align="center">ESTUDIO DESCRIPTIVO DE LAS ALMENDRAS DE CACAO</h1>
+<h2 align="center">VISTA FISICA, QUIMICA Y SENSORIAL</h2>
 
+<!-- section 2 -->
+
+<form name="record" action="insertar.php" method="post">
+<fieldset>
+<legend>REGISTRAR CASO DE ESTUDIO</legend>
+<label for="nombre">Ingrese su nombre:</label>
+<input type="text" name="nombre"><br>
+<label for="nominio">Ingrese el Dominio:</label>
+<input type="text" name="dominio"><br>
+<label for="reino">Ingrese el Reino</label>
+<input type="text" name="reino"><br>
+<label for="phylum">Ingrese el Phylum:</label>
+<input type="text" name="phylum"><br>
+<label for="clase">Ingrese la Clase:</label>
+<input type="text" name="clase"><br>
+<label for="subclase">Ingrese la Subclase:</label>
+<input type="text" name="subclase"><br>
+<label for="orden">Ingrese la Orden:</label>
+<input type="text" name="orden"><br>
+<label for="familia">Ingrese la Familia:</label>
+<input type="text" name="familia"><br>
+<label for="genero">Ingrese el Genero:</label>
+<input 12345678type="text" name="genero"><br>
+<label for="especie">Ingrese la Especie:</label>
+<input type="text" name="especie"><br>
+<label for="direccion">Ingrese la Direccion:</label>
+<input type="text" name="direccion"><br>
+<input type="submit" value="REGISTRAR"><br>
+</fieldset>
+
+</form>
+<hr>
+<!--section 3 -->
+<?php
+/* section 4 */
+
+$host        = 'localhost';
+$port        = '5432';
+$dbname      = 'almendracacaoo';
+$user        = 'postgres';
+$password    ='12345678';
+
+$connection_string =("host=$host port=$port dbname=$dbname  user=$user password=$password");
+$dbconn= pg_connect($connection_string) or die ('ERROR'.pg_last_error());
+
+$sql = "SELECT * FROM casoestudio;";
+pg_query($dbconn,$sql);
+
+$resul=pg_query($dbconn,$sql);
+
+echo "<table border='1'>\n<tr><th>#</th><th>nombre</th><th>dominio</th><th>reino</th><th>phylum</th><th>clase</th>
+     <th>subclase</th><th>orden</th><th>familia</th><th>genero</th><th>especie</th><th>direccion</th>
+</tr>\n";
+
+while($row = pg_fetch_row($resul)) {
+  echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "
+</td><td>" . $row[4] . "</td><td>" . $row[5] . "
+</td><td>" . $row[6] . "</td><td>" . $row[7] . "
+</td><td>" . $row[8] . "</td><td>" . $row[9] . "
+</td><td>" . $row[10] . "</td><td>" . $row[11] . "
+  </td></tr>\n";
+}
+echo "</table>\n";
+/* section 7 */
+pg_close($dbconn);
+?>
+<!-- section 8 -->
+</body>
+</html>
+
+#######################insertar.php#################################
+<?php
+
+$host        = 'localhost';
+$port        = '5432';
+$dbname      = 'almendracacaoo';
+$user        = 'postgres';
+$password    ='12345678';
+
+$connection_string =("host=$host port=$port dbname=$dbname  user=$user password=$password");
+$dbconn= pg_connect($connection_string) or die ('ERROR'.pg_last_error());
+
+$nombre =$_POST ["nombre"];
+$dominio =$_POST ["dominio"];
+$reino =$_POST ["reino"];
+$phylum =$_POST ["phylum"];
+$clase =$_POST ["clase"];
+$subclase =$_POST ["subclase"];
+$orden =$_POST ["orden"];
+$familia =$_POST ["familia"];
+$genero =$_POST ["genero"];
+$especie=$_POST ["especie"];
+$direccion=$_POST ["direccion"];
+
+$sql ="INSERT INTO casoestudio VALUES (default,'".$nombre."','".$dominio."', '".$reino."', 
+'".$phylum."', '".$clase."', '".$subclase ."', '".$orden."','".$familia."',
+'".$genero ."','".$especie."','".$direccion."');";
+pg_query($dbconn,$sql);
+
+ pg_close($dbconn);
+ echo "Su registro fue exitoso ";
+?>
